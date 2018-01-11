@@ -26,7 +26,6 @@ def print_msg(msg):
     print(json.dumps(msg, indent=10))
 
 def on_chat(msg):
-    #print_msg(msg)
     print_msg(msg)
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     header = telepot.glance(msg, flavor="chat",long =True)
