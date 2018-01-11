@@ -11,7 +11,7 @@ from telepot.namedtuple import (
 from random import choice
 import json
 
-TOKEN = '387192003:AAGrL7j7hI7KkHvkmVCyDv94hxhEA4230Oc'
+TOKEN = ''
 
 bot = telepot.Bot(TOKEN)
 telBot=telepot.Bot (TOKEN) 
