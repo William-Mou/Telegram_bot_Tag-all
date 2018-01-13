@@ -10,6 +10,7 @@ from telepot.namedtuple import (
 )
 from random import choice
 import json
+import time
 
 TOKEN = ''
 
@@ -131,51 +132,84 @@ def on_chat(msg):
                         except:
                             pass
                 bot.sendMessage(header[2],str(msg['chat']['id'])+"總資產："+str(s))
+            
+            elif command[:9] == "del_list":
+                del moneydict[msg['chat']['id']]
+                bot.sendMessage(header[2],"以清除您的儲蓄列表")
+              
+
+
         # other msg
         #else: 
             # 我覺得不行！
             #image_url = "https://cdn.pixabay.com/photo/2016/03/22/23/45/money-1273908_960_720.jpg"
             #bot.sendPhoto(header[2], image_url)
     #bot.sendMessage(header[2],"輸入/start查看指令")
+        if "@all" in msg["text"]:
+            admins_list=[]
+            admins_dict=telBot.getChatAdministrators (msg["chat"]["id"])
+            chat_name=msg["chat"]["title"].encode('utf8')
+            print(admins_dict)
+            for admin in admins_dict:
+                if 'username' in admin['user']:
+                    admins_list.append('@'+str(admin['user']["username"])+" ")
+                else:
+                    user_id=admin["user"]["id"]
 
-    if "@all" in msg["text"]:
-        admins_list=[]
-        admins_dict=telBot.getChatAdministrators (msg["chat"]["id"])
-        chat_name=msg["chat"]["title"].encode('utf8')
-        print(admins_dict)
-        for admin in admins_dict:
-            if 'username' in admin['user']:
-                admins_list.append('@'+str(admin['user']["username"])+" ")
-            else:
-                user_id=admin["user"]["id"]
-                
-                try :
-                    first_name=admin["user"]["first_name"]
-                except:
-                    pass
-                try :
-                    last_name=admin["user"]["last_name"]
-                except:
-                    pass
-                try:
-                    admins_list.append('@ '+first_name+" "+last_name)
-                except:
-                    try:
-                        admins_list.append('@'+first_name)
+                    try :
+                        first_name=admin["user"]["first_name"]
+                    except:
+                        pass
+                    try :
+                        last_name=admin["user"]["last_name"]
                     except:
                         pass
                     try:
-                        admins_list.append('@'+last_name)  
+                        admins_list.append('@ '+first_name+" "+last_name)
                     except:
-                        pass
+                        try:
+                            admins_list.append('@'+first_name)
+                        except:
+                            pass
+                        try:
+                            admins_list.append('@'+last_name)  
+                        except:
+                            pass
+                print(admins_list)
+            send=""
+            for admin in admins_list:
+                send+= admin + " "
+            bot.sendMessage(header[2], send)
             print(admins_list)
-        send=""
-        for admin in admins_list:
-            send+= admin + " "
-        bot.sendMessage(header[2], send)
-        #print(admins_list)
-    
-    
+        
+        if "@book_keeping_bot 閉嘴" in msg["text"] or "shut up" in msg["text"]:
+            bot.sendMessage(header[2], '@' + msg['from']['username'] + " 對不起Q.Q")
+            time.sleep(5)
+            bot.sendMessage(header[2], '@' + msg['from']['username'] + " 你以為我會這樣說ㄇ？")
+            bot.sendMessage(header[2], '@' + msg['from']['username'] + "\n\
+ ——————/´﻿ ¯/) \n\
+—————--/—-/   \n\
+—————-/—-/   \n\
+———--/´¯/'--'/´¯`·_\n\
+———-/'/--/—-/—--/¨¯\n\
+——--('(———- ¯~/'--')\n\
+———\————-'—--/\n\
+———-'\'————_-·´\n\
+————\———--(\n\
+————-\———-- ")
+            
+        elif "@book_keeping_bot" in msg["text"]:
+
+            bot.sendMessage(header[2], '@' + msg['from']['username'] + " 我可是很忙得")
+            image_url ="https://www.moedict.tw/%E5%88%B7%E5%88%B7.png"
+            bot.sendMessage(header[2], '@' + msg['from']['username'] + " 找我有啥事情？")
+            bot.sendMessage(header[2],"孤單寂寞覺得冷？")
+            bot.sendMessage(header[2],"簡單，我可以陪你刷起來！")
+            for ii in range(3):
+                bot.sendPhoto(header[2], image_url)
+                
+        
+        
 MessageLoop(bot, {
     'chat': on_chat,
     #'callback_query': on_callback_query,
