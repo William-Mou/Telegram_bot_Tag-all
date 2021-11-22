@@ -12,7 +12,7 @@ from random import choice
 import json
 import time
 
-TOKEN = ''
+TOKEN = '2132948309:AAEr6mNYslPmyLHAgCww4FfDR-rqfwim9Cc'
 
 bot = telepot.Bot(TOKEN)
 telBot=telepot.Bot (TOKEN) 
